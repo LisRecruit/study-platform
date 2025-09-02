@@ -17,14 +17,10 @@ import java.util.List;
 @Table(name = "roles")
 public class Role {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "role_seq", sequenceName = "seq_roles_id", allocationSize = 1)
     private Long id;
     private String name;
-    @ManyToMany(mappedBy = "roles")
-    @ToString.Exclude
-    @JsonBackReference
-    @EqualsAndHashCode.Exclude
-    @Builder.Default
+    @OneToMany(mappedBy = "roles", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<User> users = new ArrayList<>();
 }

@@ -1,13 +1,12 @@
 package com.example.study_platform.auth.user;
 
 import com.example.study_platform.auth.role.Role;
+import com.example.study_platform.student.Student;
+import com.example.study_platform.teacher.Teacher;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
@@ -18,27 +17,20 @@ import java.util.List;
 @Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @SequenceGenerator(name = "user_seq", sequenceName = "seq_users_id", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "user_seq", sequenceName = "seq_users_id", allocationSize = 1)
     private Long id;
     @Column(name = "name", unique = true)
     private String userName;
     @JsonIgnore
     @Column(nullable = false, length = 60) //BCrypt generated length
     private String password;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "role_id", nullable = false)
+    private Role role;
+    @OneToOne (mappedBy = "user")
+    private Teacher teacher;
+    @OneToOne (mappedBy = "user")
+    private Student student;
 
-    @ManyToMany(fetch = FetchType.LAZY) //to prevent load all roles each time
-    @Builder.Default
-    @JoinTable(name = "users_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    @ToString.Exclude //security
-    @EqualsAndHashCode.Exclude //security
-    @JsonManagedReference
-    private List<Role> roles = new ArrayList<>();
-
-    public void addRole(Role role) {
-        roles.add(role);
-        role.getUsers().add(this);
-    }
 }
