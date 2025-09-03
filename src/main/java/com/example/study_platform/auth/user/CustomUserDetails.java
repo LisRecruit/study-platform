@@ -56,6 +56,14 @@ public class CustomUserDetails implements UserDetails, Serializable {
 
     @Override
     public String getUsername() {
+        return email;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getName() {
         return username;
     }
 

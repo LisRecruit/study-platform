@@ -25,7 +25,7 @@ public class UserService {
     private final RoleRepository roleRepository;
     @Transactional
     public User createUser (UserCreateRequest request) {
-        if (userRepository.existsByUserName(request.username())){
+        if (userRepository.existsByEmail(request.email())){
             throw new RuntimeException("Username already exists");
         }
         Role role = roleRepository.findById(request.roleId())
@@ -42,6 +42,11 @@ public class UserService {
     public User getUserByUsername (String username) {
         return userRepository.findByUserName(username)
                 .orElseThrow(() -> new EntityNotFoundException ("User with "+username+" notfound"));
+    }
+    @Transactional
+    public User getUserByEmail (String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException ("User with "+email+" notfound"));
     }
 
 

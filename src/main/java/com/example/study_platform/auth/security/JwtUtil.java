@@ -1,5 +1,6 @@
 package com.example.study_platform.auth.security;
 
+import com.example.study_platform.auth.user.CustomUserDetails;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import jakarta.annotation.PostConstruct;
@@ -62,11 +63,12 @@ public class JwtUtil {
         System.out.printf("roles: %s\n", roles);
         claims.put("roles", roles);
         System.out.println("Roles in token: " + userDetails.getAuthorities());
-        return createToken(claims, userDetails.getUsername());
+        return createToken(claims, ((CustomUserDetails) userDetails).getEmail());
     }
     public Boolean validateToken(String token, UserDetails userDetails) {
-        final String username = extractUsername(token);
-        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+        final String emailFromToken = extractUsername(token); // subject теперь email
+        final String email = ((CustomUserDetails) userDetails).getEmail();
+        return (emailFromToken.equals(email) && !isTokenExpired(token));
     }
 
     Boolean isTokenExpired(String token) {

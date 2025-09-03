@@ -72,8 +72,8 @@ public class SecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService(UserService userService) {
-        return username ->{
-            User user = userService.getUserByUsername(username);
+        return email ->{
+            User user = userService.getUserByEmail(email);
             return new CustomUserDetails(user.getId(),
                     user.getUserName(),
                     user.getPassword(),
