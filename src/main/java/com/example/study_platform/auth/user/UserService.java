@@ -31,7 +31,7 @@ public class UserService {
         Role role = roleRepository.findById(request.roleId())
                 .orElseThrow(() -> new EntityNotFoundException("Role not found"));
         User user = User.builder()
-                .userName(request.username())
+                .username(request.username())
                 .password(passwordEncoder.encode(request.password()))
                 .role(role)
                 .build();

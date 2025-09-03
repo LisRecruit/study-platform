@@ -75,7 +75,7 @@ public class SecurityConfig {
         return email ->{
             User user = userService.getUserByEmail(email);
             return new CustomUserDetails(user.getId(),
-                    user.getUserName(),
+                    user.getUsername(),
                     user.getPassword(),
                     user.getEmail(),
                     user.getRole().getName());

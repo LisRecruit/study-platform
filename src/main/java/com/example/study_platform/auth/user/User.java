@@ -1,8 +1,6 @@
 package com.example.study_platform.auth.user;
 
 import com.example.study_platform.auth.role.Role;
-import com.example.study_platform.student.Student;
-import com.example.study_platform.teacher.Teacher;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -20,8 +18,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "user_seq", sequenceName = "seq_users_id", allocationSize = 1)
     private Long id;
-    @Column(name = "name", unique = true)
-    private String userName;
+    @Column(name = "name")
+    private String username;
     @Column(name = "email", unique = true)
     private String email;
     @JsonIgnore

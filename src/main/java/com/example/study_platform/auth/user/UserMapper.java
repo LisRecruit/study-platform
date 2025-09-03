@@ -12,7 +12,7 @@ import java.util.List;
 @Mapper (componentModel = "spring", uses = RoleMapper.class,
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface UserMapper {
-    @Mapping (target = "roleNames", source = "roles")
+    @Mapping (target = "role", source = "role")
 
     UserResponse userToUserResponse(User user);
 

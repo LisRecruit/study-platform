@@ -53,7 +53,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                             .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 //                    CustomUserDetails userDetails = new CustomUserDetails(user);
                     CustomUserDetails userDetails = new CustomUserDetails(user.getId(),
-                            user.getUserName(),
+                            user.getUsername(),
                             user.getPassword(),
                             user.getEmail(),
                             user.getRole().getName()
