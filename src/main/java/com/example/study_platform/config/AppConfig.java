@@ -27,8 +27,8 @@ public class AppConfig {
     }
 
     //security, remove prefics "ROLE_"
-    @Bean
-    public GrantedAuthorityDefaults grantedAuthorityDefaults() {
-        return new GrantedAuthorityDefaults("");
-    }
+//    @Bean
+//    public GrantedAuthorityDefaults grantedAuthorityDefaults() {
+//        return new GrantedAuthorityDefaults("");
+//    }
 }

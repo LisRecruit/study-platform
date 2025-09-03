@@ -29,7 +29,7 @@ public class Student {
     @JsonBackReference
     @Builder.Default
     private List<Teacher> teachers = new ArrayList<>();
-    @OneToOne
-    @JoinColumn(name = "user_id", unique = true)
-    private User user;
+//    @OneToOne
+//    @JoinColumn(name = "user_id", unique = true)
+//    private User user;
 }

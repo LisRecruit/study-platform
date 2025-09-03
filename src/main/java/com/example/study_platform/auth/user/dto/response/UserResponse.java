@@ -1,4 +1,4 @@
-package com.example.study_platform.auth.user.dto;
+package com.example.study_platform.auth.user.dto.response;
 
 import java.util.List;
 

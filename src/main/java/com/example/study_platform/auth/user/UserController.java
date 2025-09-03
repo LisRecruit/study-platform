@@ -1,9 +1,9 @@
 package com.example.study_platform.auth.user;
 
-import org.springframework.stereotype.Controller;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-
+@RequiredArgsConstructor
 public class UserController {
 }

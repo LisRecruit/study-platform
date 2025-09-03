@@ -20,7 +20,7 @@ import java.util.List;
 public class Teacher {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "teachers_seq")
-    @SequenceGenerator(name = "teachers_seq,", sequenceName = "teachers_seq_id", allocationSize = 1)
+    @SequenceGenerator(name = "teachers_seq", sequenceName = "teachers_seq_id", allocationSize = 1)
     private Long id;
     @Column(name = "name")
     private String name;
@@ -33,7 +33,7 @@ public class Teacher {
             joinColumns = @JoinColumn(name = "teacher_id"),
             inverseJoinColumns = @JoinColumn(name = "student_id"))
     private List<Student> students = new ArrayList<>();
-    @OneToOne
-    @JoinColumn(name = "user_id", unique = true)
-    private User user;
+//    @OneToOne
+//    @JoinColumn(name = "user_id", unique = true)
+//    private User user;
 }

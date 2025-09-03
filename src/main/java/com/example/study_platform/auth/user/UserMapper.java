@@ -2,7 +2,7 @@ package com.example.study_platform.auth.user;
 
 import com.example.study_platform.auth.role.Role;
 import com.example.study_platform.auth.role.RoleMapper;
-import com.example.study_platform.auth.user.dto.UserResponse;
+import com.example.study_platform.auth.user.dto.response.UserResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.NullValuePropertyMappingStrategy;

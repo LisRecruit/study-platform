@@ -22,15 +22,17 @@ public class User {
     private Long id;
     @Column(name = "name", unique = true)
     private String userName;
+    @Column(name = "email", unique = true)
+    private String email;
     @JsonIgnore
     @Column(nullable = false, length = 60) //BCrypt generated length
     private String password;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
-    @OneToOne (mappedBy = "user")
-    private Teacher teacher;
-    @OneToOne (mappedBy = "user")
-    private Student student;
+//    @OneToOne (mappedBy = "user")
+//    private Teacher teacher;
+//    @OneToOne (mappedBy = "user")
+//    private Student student;
 
 }

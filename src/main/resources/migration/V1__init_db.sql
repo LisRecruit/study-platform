@@ -19,6 +19,7 @@ CREATE TABLE roles (
 CREATE TABLE users (
     id BIGSERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
     password VARCHAR(100) NOT NULL,
     role_id BIGINT NOT NULL ,
     FOREIGN KEY (role_id) REFERENCES roles(id)
@@ -43,4 +44,8 @@ CREATE TABLE teachers_students (
     PRIMARY KEY (teacher_id, student_id),
     FOREIGN KEY (teacher_id) REFERENCES teachers(id),
     FOREIGN KEY (student_id) REFERENCES students(id)
-)
+);
+INSERT INTO roles (name) VALUES
+    ('ROLE_ADMIN'),
+    ('ROLE_TEACHER'),
+    ('ROLE_STUDENT');

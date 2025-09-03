@@ -2,16 +2,13 @@ package com.example.study_platform.auth.user;
 
 import com.example.study_platform.auth.role.Role;
 import com.example.study_platform.auth.role.RoleMapper;
-import com.example.study_platform.auth.user.UserMapper;
 import com.example.study_platform.auth.role.RoleRepository;
-import com.example.study_platform.auth.user.dto.UserCreateRequest;
-import com.example.study_platform.auth.user.dto.UserResponse;
-import com.example.study_platform.auth.user.dto.UserUpdateRequest;
+import com.example.study_platform.auth.user.dto.request.UserCreateRequest;
+import com.example.study_platform.auth.user.dto.response.UserResponse;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -70,7 +67,6 @@ public class UserService {
         } catch (EntityNotFoundException e) {
             throw new EntityNotFoundException("User not found");
         }
-
     }
 
 }
