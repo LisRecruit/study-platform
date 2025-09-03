@@ -6,36 +6,57 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
 //security purpose. User shouldn't know about SpringSecurity
 @Getter
-@ToString
-public class CustomUserDetails implements UserDetails {
-    private final User user;
+@ToString(exclude = "password")
+public class CustomUserDetails implements UserDetails, Serializable {
+//    private final User user;
+    @Serial
+    private final Long id;
+    private final String username;
+    private final String password;
+    private final String email;
+    private final String role;
 
-    public CustomUserDetails(User user) {
-        this.user = user;
-    }
-    public CustomUserDetails(User user, List<GrantedAuthority> authorities) {
-        this.user = user;
-    }
+    public CustomUserDetails(Long id,
+                             String username,
+                             String password,
+                             String email,
+                             String role) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.role = role;
+        }
+//    public CustomUserDetails(User user) {
+//        this.user = user;
+//    }
+
+
+//    public CustomUserDetails(User user, List<GrantedAuthority> authorities) {
+//        this.user = user;
+//    }
 
     @Override
     public List<GrantedAuthority> getAuthorities() {
 
-        return List.of(new SimpleGrantedAuthority(user.getRole().getName()));
+        return List.of(new SimpleGrantedAuthority(role));
     }
 
     @Override
     public String getPassword() {
-        return user.getPassword(); // Если у вас есть пароль в объекте User
+        return password; // Если у вас есть пароль в объекте User
     }
 
     @Override
     public String getUsername() {
-        return user.getUserName();
+        return username;
     }
 
     @Override
@@ -59,6 +80,6 @@ public class CustomUserDetails implements UserDetails {
     }
 
     public Long getUserId() {
-        return user.getId();
+        return id;
     }
 }
