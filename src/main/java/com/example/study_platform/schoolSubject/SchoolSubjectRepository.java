@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SchoolSubjectRepository extends JpaRepository<SchoolSubject, Long> {
-    boolean existsBySchoolSubjectName(String schoolSubjectName);
+    boolean existsByName(String schoolSubjectName);
 }

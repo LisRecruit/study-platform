@@ -40,7 +40,7 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public User getUserByUsername (String username) {
-        return userRepository.findByUserName(username)
+        return userRepository.findByUsername(username)
                 .orElseThrow(() -> new EntityNotFoundException ("User with "+username+" notfound"));
     }
     @Transactional
@@ -57,7 +57,7 @@ public class UserService {
     }
     @Transactional(readOnly = true)
     public List<UserResponse> getUsersByRole (Role role){
-        List<User> users = userRepository.findByRoles(role);
+        List<User> users = userRepository.findByRole(role);
         return userMapper.usersToUserResponses(users);
 
     }

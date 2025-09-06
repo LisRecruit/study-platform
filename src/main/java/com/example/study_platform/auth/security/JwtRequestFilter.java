@@ -32,6 +32,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
 
+
         if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
             logger.info("CORS preflight request detected from Origin: {}", request.getHeader("Origin"));
             response.setStatus(HttpServletResponse.SC_OK);
@@ -42,6 +43,10 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         String path = request.getRequestURI();
         logger.info("CORS check — Origin: {}",origin);
         logger.info("CORS check — Path: {}",path);
+        if (path.startsWith("/web/auth")) {
+            chain.doFilter(request, response);
+            return;
+        }
 
         String authHeader = request.getHeader("Authorization");
         if (authHeader != null && authHeader.startsWith("Bearer ")) {

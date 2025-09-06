@@ -1,5 +1,6 @@
 package com.example.study_platform.config;
 
+import com.example.study_platform.auth.security.JwtUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -26,6 +27,10 @@ public class AppConfig {
         return builder.build();
     }
 
+    @Bean
+    public JwtUtil jwtUtil() {
+        return new JwtUtil();
+    }
     //security, remove prefics "ROLE_"
 //    @Bean
 //    public GrantedAuthorityDefaults grantedAuthorityDefaults() {

@@ -10,7 +10,7 @@ public class SchoolSubjectService {
     private final SchoolSubjectMapper schoolSubjectMapper;
 
     public SchoolSubject createSchoolSubject(String name) {
-        if (!schoolSubjectRepository.existsBySchoolSubjectName(name)){
+        if (!schoolSubjectRepository.existsByName(name)){
             throw new IllegalArgumentException("School Subject Already Exists");
         }
         SchoolSubject schoolSubject = new SchoolSubject();
