@@ -44,6 +44,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                                 .requestMatchers("/web/auth/**").permitAll()
+                                .requestMatchers("/web/auth/**").permitAll()
                                 .requestMatchers("/api/v1/auth/**").permitAll()
 //                                .requestMatchers("/h2-console/**").permitAll()
                                 .requestMatchers("/swagger-ui.html").permitAll()
@@ -52,6 +53,9 @@ public class SecurityConfig {
                                 .requestMatchers("/api/v1/admin/**").hasAuthority("ROLE_ADMIN")
                                 .requestMatchers("/api/v1/teacher/**").hasAuthority("ROLE_TEACHER")
                                 .requestMatchers("/api/v1/student/**").hasAuthority("ROLE_STUDENT")
+                                .requestMatchers("/web/student/**").hasAuthority("ROLE_STUDENT")
+                                .requestMatchers("/web/teacher/**").hasAuthority("ROLE_TEACHER")
+                                .requestMatchers("/web/admin/**").hasAuthority("ROLE_ADMIN")
                                 .requestMatchers("/api/v1/**").authenticated()
                                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                                 .anyRequest().authenticated()

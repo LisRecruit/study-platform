@@ -1,7 +1,6 @@
 package com.example.study_platform.auth.user;
 
 import com.example.study_platform.auth.role.Role;
-import com.example.study_platform.auth.role.RoleMapper;
 import com.example.study_platform.auth.role.RoleRepository;
 import com.example.study_platform.auth.user.dto.request.UserCreateRequest;
 import com.example.study_platform.auth.user.dto.response.UserResponse;
@@ -20,7 +19,6 @@ import java.util.List;
 public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
-    private final RoleMapper roleMapper;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
     @Transactional

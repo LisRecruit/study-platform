@@ -1,6 +1,7 @@
 package com.example.study_platform.teacher;
 
 import com.example.study_platform.auth.user.User;
+import com.example.study_platform.school.School;
 import com.example.study_platform.student.Student;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -33,7 +34,10 @@ public class Teacher {
             joinColumns = @JoinColumn(name = "teacher_id"),
             inverseJoinColumns = @JoinColumn(name = "student_id"))
     private List<Student> students = new ArrayList<>();
-//    @OneToOne
-//    @JoinColumn(name = "user_id", unique = true)
-//    private User user;
+    @OneToOne
+    @JoinColumn(name = "user_id", unique = true)
+    private User user;
+    @ManyToOne
+    @JoinColumn(name = "school_id")
+    private School school;
 }

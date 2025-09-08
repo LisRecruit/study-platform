@@ -1,6 +1,8 @@
 package com.example.study_platform.auth.user;
 
 import com.example.study_platform.auth.role.Role;
+import com.example.study_platform.student.Student;
+import com.example.study_platform.teacher.Teacher;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -28,9 +30,15 @@ public class User {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
-//    @OneToOne (mappedBy = "user")
-//    private Teacher teacher;
-//    @OneToOne (mappedBy = "user")
-//    private Student student;
+    @OneToOne (mappedBy = "user")
+    private Teacher teacher;
+    @OneToOne (mappedBy = "user")
+    private Student student;
 
+    public boolean isTeacher() {
+        return this.teacher != null;
+    }
+    public boolean isStudent() {
+        return this.student != null;
+    }
 }

@@ -1,6 +1,7 @@
 package com.example.study_platform.schoolSubject;
 
 import com.example.study_platform.lesson.Lesson;
+import com.example.study_platform.school.School;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,4 +24,6 @@ public class SchoolSubject {
 
     @OneToMany(mappedBy = "schoolSubject", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Lesson> lessons = new ArrayList<>();
+    @ManyToOne
+    private School school;
 }

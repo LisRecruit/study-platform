@@ -5,13 +5,15 @@
 </head>
 <body>
 <h2>Register</h2>
-<form th:action="@{/auth/register}" method="post" th:object="${user}">
+<form th:action="@{/web/auth/register}" method="post" th:object="${user}">
     <label>Username:</label>
     <input type="text" th:field="*{username}" /><br/>
     <label>Email:</label>
     <input type="text" th:field="*{email}" /><br/>
     <label>Password:</label>
     <input type="password" th:field="*{password}" /><br/>
+    <label>Role:</label>
+    <input type="integer" th:field="*{roleId}" /><br/>
     <button type="submit">Register</button>
 </form>
 </body>
