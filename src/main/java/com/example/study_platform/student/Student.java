@@ -2,8 +2,8 @@ package com.example.study_platform.student;
 
 import com.example.study_platform.auth.user.User;
 import com.example.study_platform.grade.Grade;
+import com.example.study_platform.journal.JournalRecord;
 import com.example.study_platform.school.School;
-import com.example.study_platform.schoolSubject.SchoolSubject;
 import com.example.study_platform.teacher.Teacher;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
@@ -41,4 +41,7 @@ public class Student {
     @ManyToOne
     @JoinColumn(name = "school_id")
     private School school;
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<JournalRecord> lessons = new ArrayList<>();
+
 }

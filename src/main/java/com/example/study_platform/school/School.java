@@ -1,6 +1,7 @@
 package com.example.study_platform.school;
 
 import com.example.study_platform.grade.Grade;
+import com.example.study_platform.journal.JournalRecord;
 import com.example.study_platform.schoolSubject.SchoolSubject;
 import com.example.study_platform.student.Student;
 import com.example.study_platform.teacher.Teacher;
@@ -23,11 +24,13 @@ public class School {
     private Long id;
     private String name;
     @OneToMany(mappedBy = "school", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<SchoolSubject> schoolSubjects;
+    private List<SchoolSubject> schoolSubjects;
     @OneToMany(mappedBy = "school", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<Teacher> teachers;
+    private List<Teacher> teachers;
     @OneToMany(mappedBy = "school", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<Student> students;
+    private List<Student> students;
     @OneToMany(mappedBy = "school", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<Grade> grades;
+    private List<Grade> grades;
+    @OneToMany(mappedBy = "school", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<JournalRecord> journalRecords;
 }

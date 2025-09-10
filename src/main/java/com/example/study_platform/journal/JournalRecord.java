@@ -8,19 +8,17 @@ import com.example.study_platform.student.Student;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
-
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "journal")
-public class Journal {
+@Table(name = "journal_records")
+public class JournalRecord {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "journal_seq")
-    @SequenceGenerator(name = "journal_seq", sequenceName = "seq_journal_id", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "journal_records_seq")
+    @SequenceGenerator(name = "journal_records_seq", sequenceName = "seq_journal_record_id", allocationSize = 1)
     private Long id;
     @ManyToOne
     @JoinColumn(name = "school_subject_id", nullable = false)

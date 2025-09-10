@@ -3,6 +3,7 @@ package com.example.study_platform.teacher;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,6 +16,11 @@ public class TeacherService {
         Teacher teacher = new Teacher();
         teacher.setName(name);
         return teacherRepository.save(teacher);
+    }
+    @Cacheable("teachers")
+    public Teacher getTeacherById(Long id) {
+        return teacherRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Teacher Not Found"));
     }
 
 }

@@ -1,7 +1,9 @@
 package com.example.study_platform.teacher;
 
 import com.example.study_platform.auth.user.User;
+import com.example.study_platform.lesson.Lesson;
 import com.example.study_platform.school.School;
+import com.example.study_platform.schoolSubject.SchoolSubject;
 import com.example.study_platform.student.Student;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -40,4 +42,9 @@ public class Teacher {
     @ManyToOne
     @JoinColumn(name = "school_id")
     private School school;
+    @ManyToOne
+    @JoinColumn(name = "school_subject_id")
+    private SchoolSubject schoolSubject;
+    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Lesson> lessons = new ArrayList<>();
 }
