@@ -1,6 +1,7 @@
 package com.example.study_platform.journal;
 
 import com.example.study_platform.grade.Grade;
+import com.example.study_platform.homework.HomeWork;
 import com.example.study_platform.lesson.Lesson;
 import com.example.study_platform.school.School;
 import com.example.study_platform.schoolSubject.SchoolSubject;
@@ -36,7 +37,17 @@ public class JournalRecord {
     @ManyToOne
     @JoinColumn(name = "school_id")
     private School school;
+    @ManyToOne
+    @JoinColumn(name = "home_work_id")
+    private HomeWork homeWork;
 
+    @PrePersist
+    @PreUpdate
+    private void validateLessonOrHomeWork() {
+        if ((lesson == null && homeWork == null) || (lesson != null && homeWork != null)) {
+            throw new IllegalStateException("Either 'lesson' or 'homeWork' must be set, but not both at the same time.");
+        }
+    }
 
 
 }

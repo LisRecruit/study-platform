@@ -31,7 +31,7 @@ public class SchoolSubject {
     private School school;
     @OneToMany(mappedBy = "SchoolSubject", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Teacher> teachers;
-    @OneToMany(mappedBy = "schoolSubject", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<JournalRecord> journalRecords;
+//    @OneToMany(mappedBy = "schoolSubject", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<JournalRecord> journalRecords;
 
 }

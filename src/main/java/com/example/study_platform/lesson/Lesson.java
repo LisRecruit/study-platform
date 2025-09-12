@@ -1,6 +1,8 @@
 package com.example.study_platform.lesson;
 
+import com.example.study_platform.grade.Grade;
 import com.example.study_platform.journal.JournalRecord;
+import com.example.study_platform.school.School;
 import com.example.study_platform.schoolSubject.SchoolSubject;
 import com.example.study_platform.teacher.Teacher;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -46,4 +48,8 @@ public class Lesson {
 
     @OneToMany(mappedBy = "lesson", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<JournalRecord> journalRecords;
+
+    @ManyToOne
+    @JoinColumn(name = "grade_id")
+    private Grade grade;
 }

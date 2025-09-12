@@ -1,11 +1,14 @@
 package com.example.study_platform.grade;
 
 
+import com.example.study_platform.homework.HomeWork;
+import com.example.study_platform.lesson.Lesson;
 import com.example.study_platform.school.School;
 import com.example.study_platform.student.Student;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -26,4 +29,8 @@ public class Grade {
     @ManyToOne
     @JoinColumn(name = "school_id")
     private School school;
+    @OneToMany(mappedBy = "grade", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Lesson> lessons = new ArrayList<>();
+    @OneToMany(mappedBy = "grade", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<HomeWork> homeWork = new ArrayList<>();
 }
