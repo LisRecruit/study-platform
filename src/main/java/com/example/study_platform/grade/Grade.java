@@ -31,6 +31,6 @@ public class Grade {
     private School school;
     @OneToMany(mappedBy = "grade", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Lesson> lessons = new ArrayList<>();
-    @OneToMany(mappedBy = "grade", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<HomeWork> homeWork = new ArrayList<>();
+//    @OneToMany(mappedBy = "grade", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<HomeWork> homeWork = new ArrayList<>();
 }

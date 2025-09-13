@@ -18,6 +18,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class JournalRecordService {
@@ -51,4 +53,9 @@ public class JournalRecordService {
         JournalRecord savedRecord = journalRecordRepository.save(journalRecord);
         return journalRecordMapper.toResponse(savedRecord);
     }
+    @Transactional
+    public List<JournalRecord> saveAllJournalRecords(List<JournalRecord> journalRecords) {
+        return journalRecordRepository.saveAll(journalRecords);
+    }
+
 }

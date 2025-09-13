@@ -52,4 +52,6 @@ public class Lesson {
     @ManyToOne
     @JoinColumn(name = "grade_id")
     private Grade grade;
+
+    private LocalTime get;
 }

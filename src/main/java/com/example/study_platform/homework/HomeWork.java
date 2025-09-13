@@ -2,6 +2,7 @@ package com.example.study_platform.homework;
 
 import com.example.study_platform.grade.Grade;
 import com.example.study_platform.journal.JournalRecord;
+import com.example.study_platform.student.Student;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -25,10 +26,10 @@ public class HomeWork {
     private LocalDate endDate;
     @ManyToOne
     @JoinColumn(name = "grade_id")
-    private Grade grade;
+    private Student student;
     private String task;
     private String studentTask;
-    @OneToMany(mappedBy = "home_work", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<JournalRecord> lessons = new ArrayList<>();
+    @OneToOne(mappedBy = "home_work", cascade = CascadeType.ALL, orphanRemoval = true)
+    private JournalRecord journalRecord;
 
 }

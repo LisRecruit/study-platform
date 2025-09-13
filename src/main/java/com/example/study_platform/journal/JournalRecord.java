@@ -33,13 +33,14 @@ public class JournalRecord {
     @ManyToOne
     @JoinColumn(name = "grade_id", nullable = false)
     private Grade grade;
-    private int mark;
+    private Integer mark;
     @ManyToOne
     @JoinColumn(name = "school_id")
     private School school;
-    @ManyToOne
+    @OneToOne (cascade = CascadeType.ALL)
     @JoinColumn(name = "home_work_id")
     private HomeWork homeWork;
+
 
     @PrePersist
     @PreUpdate

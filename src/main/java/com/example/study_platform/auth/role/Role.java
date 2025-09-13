@@ -22,6 +22,6 @@ public class Role {
 
     private Long id;
     private String name;
-    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<User> users = new ArrayList<>();
+    @OneToOne(mappedBy = "role", orphanRemoval = true)
+    private User user;
 }

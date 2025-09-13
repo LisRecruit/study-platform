@@ -2,6 +2,7 @@ package com.example.study_platform.school;
 
 import com.example.study_platform.grade.Grade;
 import com.example.study_platform.journal.JournalRecord;
+import com.example.study_platform.school.settings.SchoolSettings;
 import com.example.study_platform.schoolSubject.SchoolSubject;
 import com.example.study_platform.student.Student;
 import com.example.study_platform.teacher.Teacher;
@@ -33,4 +34,7 @@ public class School {
     private List<Grade> grades;
     @OneToMany(mappedBy = "school", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<JournalRecord> journalRecords;
+    @OneToOne(mappedBy = "schoolSettings", cascade = CascadeType.ALL, orphanRemoval = true)
+    private SchoolSettings schoolSettings;
+
 }
