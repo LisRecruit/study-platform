@@ -27,4 +27,10 @@ public class SchoolSettings {
     @Column(nullable = false)
     private LocalTime lessonDuration;
 
+    public LocalTime calculateLessonEndTime (LocalTime startTime) {
+        return startTime.plusHours(lessonDuration.getHour())
+                .plusMinutes(lessonDuration.getMinute())
+                .plusSeconds(lessonDuration.getSecond());
+    }
+
 }

@@ -34,6 +34,7 @@ public class Lesson {
     private Teacher teacher;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     @Column(nullable = false)
+
     private LocalDate lessonDate;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
@@ -53,5 +54,6 @@ public class Lesson {
     @JoinColumn(name = "grade_id")
     private Grade grade;
 
-    private LocalTime get;
+
+
 }

@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -22,5 +23,15 @@ public class TeacherService {
         return teacherRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Teacher Not Found"));
     }
+
+    public Teacher getCurrentTeacher() {
+        // Получаем имя текущего пользователя
+        String currentUsername = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        // Ищем учителя по имени пользователя
+        return teacherRepository.findByName(currentUsername)
+                .orElseThrow(() -> new IllegalArgumentException("Teacher Not Found"));
+    }
+
 
 }
