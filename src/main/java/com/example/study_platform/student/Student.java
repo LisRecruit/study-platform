@@ -36,10 +36,10 @@ public class Student {
     @OneToOne
     @JoinColumn(name = "user_id", unique = true)
     private User user;
-    @ManyToOne
+    @ManyToOne (fetch = FetchType.EAGER)
     @JoinColumn(name = "grade_id")
     private Grade grade;
-    @ManyToOne
+    @ManyToOne (fetch = FetchType.EAGER)
     @JoinColumn(name = "school_id")
     private School school;
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)

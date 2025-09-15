@@ -68,9 +68,15 @@ public class LessonService {
                 .schoolSubject(teacher.getSchoolSubject())
                 .build();
 
+        if(isLessonExistsForGradeAndDateTime(lesson)){
+            return ResponseEntity.badRequest().body("This grade already has a lesson at this date and time");
+        }
+
+        Lesson savedLesson = lessonRepository.save(lesson);
+
         List<JournalRecord> journalRecords = grade.getStudents().stream()
                 .map(student -> JournalRecord.builder()
-                        .lesson(lesson)
+                        .lesson(savedLesson)
                         .student(student)
                         .grade(grade)
                         .school(teacher.getSchool())
@@ -78,13 +84,11 @@ public class LessonService {
                         .mark(null)
                         .build())
                 .toList();
-        if(isLessonExistsForGradeAndDateTime(lesson)){
-            return ResponseEntity.badRequest().body("This grade already has a lesson at this date and time");
-        }
+
         journalRecordService.saveAllJournalRecords(journalRecords);
-        lesson.setJournalRecords(journalRecords);
+        savedLesson.setJournalRecords(journalRecords);
         journalRecords.forEach(journalRecord -> journalRecord.getStudent().getJournalRecords().add(journalRecord));
-        LessonResponse response = lessonMapper.toLessonResponse(lessonRepository.save(lesson));
+        LessonResponse response = lessonMapper.toLessonResponse(savedLesson);
         return response != null ? ResponseEntity.ok(response) : ResponseEntity.badRequest().build();
     }
 

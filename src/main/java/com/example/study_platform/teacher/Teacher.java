@@ -27,7 +27,7 @@ public class Teacher {
     private Long id;
     @Column(name = "name")
     private String name;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @Builder.Default
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
@@ -39,10 +39,10 @@ public class Teacher {
     @OneToOne
     @JoinColumn(name = "user_id", unique = true)
     private User user;
-    @ManyToOne
+    @ManyToOne (fetch = FetchType.EAGER)
     @JoinColumn(name = "school_id")
     private School school;
-    @ManyToOne
+    @ManyToOne (fetch = FetchType.EAGER)
     @JoinColumn(name = "school_subject_id")
     private SchoolSubject schoolSubject;
     @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)

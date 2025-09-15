@@ -24,8 +24,8 @@ public class HomeWork {
     private Long id;
     private LocalDate startDate;
     private LocalDate endDate;
-    @ManyToOne
-    @JoinColumn(name = "grade_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "student_id")
     private Student student;
     private String task;
     private String studentTask;

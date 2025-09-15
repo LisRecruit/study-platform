@@ -26,15 +26,14 @@ public class Lesson {
     @SequenceGenerator(name = "lessons_seq", sequenceName = "lessons_seq_id", allocationSize = 1)
     private Long id;
 
-    @ManyToOne (fetch = FetchType.LAZY)
+    @ManyToOne (fetch = FetchType.EAGER)
     @JoinColumn(name = "school_subject_id", nullable = false)
     private SchoolSubject schoolSubject;
-    @ManyToOne (fetch = FetchType.LAZY)
+    @ManyToOne (fetch = FetchType.EAGER)
     @JoinColumn(name = "teacher_id", nullable = false)
     private Teacher teacher;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     @Column(nullable = false)
-
     private LocalDate lessonDate;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
@@ -50,7 +49,7 @@ public class Lesson {
     @OneToMany(mappedBy = "lesson", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<JournalRecord> journalRecords;
 
-    @ManyToOne
+    @ManyToOne (fetch = FetchType.EAGER)
     @JoinColumn(name = "grade_id")
     private Grade grade;
 

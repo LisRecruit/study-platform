@@ -26,11 +26,9 @@ public class Grade {
     private String name;
     @OneToMany(mappedBy = "grade", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Student> students;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "school_id")
     private School school;
     @OneToMany(mappedBy = "grade", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Lesson> lessons = new ArrayList<>();
-//    @OneToMany(mappedBy = "grade", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<HomeWork> homeWork = new ArrayList<>();
 }

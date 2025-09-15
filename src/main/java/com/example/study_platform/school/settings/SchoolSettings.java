@@ -1,6 +1,7 @@
 package com.example.study_platform.school.settings;
 
 import com.example.study_platform.school.School;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -25,6 +26,7 @@ public class SchoolSettings {
     private School school;
 
     @Column(nullable = false)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
     private LocalTime lessonDuration;
 
     public LocalTime calculateLessonEndTime (LocalTime startTime) {
