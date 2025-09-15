@@ -73,4 +73,18 @@ public class UserService {
         }
     }
 
+    @Transactional(readOnly = true)
+    public Long resolveSchoolId(User user) {
+        if (user.isTeacher() && user.getTeacher() != null) {
+            return user.getTeacher().getSchool() != null ? user.getTeacher().getSchool().getId() : null;
+        }
+        if (user.isStudent() && user.getStudent() != null) {
+            return user.getStudent().getSchool() != null ? user.getStudent().getSchool().getId() : null;
+        }
+
+
+        return null;
+    }
+
+
 }

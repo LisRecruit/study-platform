@@ -161,4 +161,13 @@ public class LessonService {
                 lesson.getLessonDate(), lesson.getLessonStartTime());
     }
 
+    @Cacheable("lessons")
+    public List<LessonResponse> getLessonsBySchool(Long schoolId) {
+        List<Lesson> lessons = lessonRepository.findAllBySchoolId(schoolId);
+        return lessons.stream()
+                .map(lessonMapper::toLessonResponse)
+                .toList();
+    }
+
+
 }

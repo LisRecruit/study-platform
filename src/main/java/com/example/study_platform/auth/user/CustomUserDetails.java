@@ -22,17 +22,20 @@ public class CustomUserDetails implements UserDetails, Serializable {
     private final String password;
     private final String email;
     private final String role;
+    private final Long schoolId;
 
     public CustomUserDetails(Long id,
                              String username,
                              String password,
                              String email,
-                             String role) {
+                             String role,
+                             Long schoolId) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
         this.role = role;
+        this.schoolId = schoolId;
         }
 //    public CustomUserDetails(User user) {
 //        this.user = user;
@@ -90,4 +93,6 @@ public class CustomUserDetails implements UserDetails, Serializable {
     public Long getUserId() {
         return id;
     }
+
+
 }

@@ -57,11 +57,14 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                     User user = userRepository.findByEmail(email)
                             .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 //                    CustomUserDetails userDetails = new CustomUserDetails(user);
+                    Long schoolId = resolveSchoolId(user);
+
                     CustomUserDetails userDetails = new CustomUserDetails(user.getId(),
                             user.getUsername(),
                             user.getPassword(),
                             user.getEmail(),
-                            user.getRole().getName()
+                            user.getRole().getName(),
+                            schoolId
                     );
                     if (Boolean.TRUE.equals(jwtUtil.validateToken(token, userDetails))) {
                         UsernamePasswordAuthenticationToken authenticationToken =

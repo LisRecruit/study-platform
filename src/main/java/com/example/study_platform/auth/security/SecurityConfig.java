@@ -79,11 +79,18 @@ public class SecurityConfig {
     public UserDetailsService userDetailsService(UserService userService) {
         return email ->{
             User user = userService.getUserByEmail(email);
-            return new CustomUserDetails(user.getId(),
+
+            Long schoolId = userService.resolveSchoolId(user);
+
+            return new CustomUserDetails(
+                    user.getId(),
                     user.getUsername(),
                     user.getPassword(),
                     user.getEmail(),
-                    user.getRole().getName());
+                    user.getRole().getName(),
+                    schoolId
+            );
+
         };
     }
     @Bean

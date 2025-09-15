@@ -55,15 +55,24 @@ public class JwtUtil {
     }
 
     public String generateToken (UserDetails userDetails, Long userId) {
-
         Map<String, Object> claims = new HashMap<>();
         claims.put("user_id", userId);
+
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .toList();
+
+        Long schoolId = null;
+        if (userDetails instanceof CustomUserDetails customUserDetails) {
+            schoolId = customUserDetails.getSchoolId();
+            System.out.printf("User ID: %d, School ID: %d%n", customUserDetails.getUserId(), customUserDetails.getSchoolId());
+        }
+        claims.put("school_id", schoolId);
         System.out.printf("roles: %s\n", roles);
         claims.put("roles", roles);
+
         System.out.println("Roles in token: " + userDetails.getAuthorities());
+
         return createToken(claims, ((CustomUserDetails) userDetails).getEmail());
     }
     public Boolean validateToken(String token, UserDetails userDetails) {
