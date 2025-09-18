@@ -2,6 +2,7 @@ package com.example.study_platform.journal;
 
 import com.example.study_platform.grade.Grade;
 import com.example.study_platform.grade.GradeService;
+import com.example.study_platform.journal.dto.request.EvaluateStudentRequest;
 import com.example.study_platform.journal.dto.request.JournalRecordRequest;
 import com.example.study_platform.journal.dto.response.JournalRecordResponse;
 import com.example.study_platform.lesson.Lesson;
@@ -19,6 +20,8 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -57,5 +60,38 @@ public class JournalRecordService {
     public List<JournalRecord> saveAllJournalRecords(List<JournalRecord> journalRecords) {
         return journalRecordRepository.saveAll(journalRecords);
     }
+
+    @Transactional
+    public List<JournalRecordResponse> getJournalRecords(Object filter) {
+        List<JournalRecord> records;
+
+        if (filter instanceof Grade grade) {
+            records = journalRecordRepository.findAll(JournalRecordSpecification.hasGrade(grade));
+        } else if (filter instanceof Lesson lesson) {
+            records = journalRecordRepository.findAll(JournalRecordSpecification.hasLesson(lesson));
+        } else if (filter instanceof Student student) {
+            records = journalRecordRepository.findAll(JournalRecordSpecification.hasStudent(student));
+        } else {
+            throw new IllegalArgumentException("Unsupported filter type");
+        }
+
+        return records.stream()
+                .map(journalRecordMapper::toResponse)
+                .collect(Collectors.toList());
+
+    }
+
+    @Transactional
+    public JournalRecordResponse evaluateStudent (EvaluateStudentRequest request) {
+        Optional<JournalRecord> record = journalRecordRepository.findById(request.journalId());
+        if (record.isEmpty()) {
+            throw new IllegalArgumentException("Journal Record Not Found");
+        }
+        JournalRecord journalRecord = record.get();
+        journalRecord.setMark(request.mark());
+        return journalRecordMapper.toResponse(journalRecordRepository.save(journalRecord));
+    }
+
+
 
 }
