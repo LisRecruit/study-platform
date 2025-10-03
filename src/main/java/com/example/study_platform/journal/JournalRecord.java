@@ -9,6 +9,8 @@ import com.example.study_platform.student.Student;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
+
 @Entity
 @Getter
 @Setter
@@ -21,11 +23,13 @@ public class JournalRecord {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "journal_records_seq")
     @SequenceGenerator(name = "journal_records_seq", sequenceName = "seq_journal_record_id", allocationSize = 1)
     private Long id;
+    @Column(nullable = false)
+    private LocalDate date;
     @ManyToOne
     @JoinColumn(name = "school_subject_id", nullable = false)
     private SchoolSubject schoolSubject;
     @ManyToOne
-    @JoinColumn(name = "lesson_id", nullable = false)
+    @JoinColumn(name = "lesson_id")
     private Lesson lesson;
     @ManyToOne
     @JoinColumn(name = "student_id", nullable = false)
@@ -35,7 +39,7 @@ public class JournalRecord {
     private Grade grade;
     private Integer mark;
     @ManyToOne
-    @JoinColumn(name = "school_id")
+    @JoinColumn(name = "school_id", nullable = false)
     private School school;
     @OneToOne (cascade = CascadeType.ALL)
     @JoinColumn(name = "home_work_id")

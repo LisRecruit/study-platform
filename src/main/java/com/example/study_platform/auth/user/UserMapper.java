@@ -5,6 +5,7 @@ import com.example.study_platform.auth.role.RoleMapper;
 import com.example.study_platform.auth.user.dto.response.UserResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 
 import java.util.List;
@@ -17,9 +18,9 @@ public interface UserMapper {
     UserResponse userToUserResponse(User user);
 
     List<UserResponse> usersToUserResponses(List<User> users);
-
+    @Named("mapRoleToName")
     default String mapRoleToName(Role role) {
-        return role.getName();
+        return role.getName().toString();
     }
 
 }

@@ -3,6 +3,7 @@ package com.example.study_platform.auth.security;
 import com.example.study_platform.auth.user.CustomUserDetails;
 import com.example.study_platform.auth.user.User;
 import com.example.study_platform.auth.user.UserRepository;
+import com.example.study_platform.teacher.Teacher;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -56,8 +57,15 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                     User user = userRepository.findByEmail(email)
                             .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-//                    CustomUserDetails userDetails = new CustomUserDetails(user);
-                    Long schoolId = resolveSchoolId(user);
+//                    Object userType = user.getUserType();
+                    Long schoolId;
+                    if (user.isStudent()){
+                        schoolId=user.getStudent().getSchool().getId();
+                    } else if (user.isTeacher()){
+                        schoolId=user.getTeacher().getSchool().getId();
+                    } else {
+                        throw new UsernameNotFoundException("User not found");
+                    }
 
                     CustomUserDetails userDetails = new CustomUserDetails(user.getId(),
                             user.getUsername(),

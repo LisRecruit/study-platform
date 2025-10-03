@@ -1,6 +1,7 @@
 package com.example.study_platform.auth.user;
 
 import com.example.study_platform.auth.role.Role;
+import com.example.study_platform.school.settings.SchoolSettings;
 import com.example.study_platform.student.Student;
 import com.example.study_platform.teacher.Teacher;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -27,7 +28,7 @@ public class User {
     @JsonIgnore
     @Column(nullable = false, length = 60) //BCrypt generated length
     private String password;
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
     @OneToOne (mappedBy = "user")
@@ -40,5 +41,13 @@ public class User {
     }
     public boolean isStudent() {
         return this.student != null;
+    }
+    public Object getUserType(){
+        if(this.isTeacher()){
+            return teacher;
+        }
+        if(this.isStudent()){
+            return student;
+        } else return null;
     }
 }

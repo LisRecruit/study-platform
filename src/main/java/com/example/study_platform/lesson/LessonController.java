@@ -11,14 +11,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/lesson")
 public class LessonController {
     private final LessonService lessonService;
-    private final Validator validator;
 
     @PostMapping("/create")
     @RolesAllowed("ROLE_TEACHER")
@@ -74,7 +72,7 @@ public class LessonController {
     public ResponseEntity<?> getLesson (@PathVariable Long id) {
         Lesson lesson = lessonService.getLessonById(id);
         Long schoolId = lesson.getTeacher().getSchool().getId();
-        if (validator.isUserBelongToThisSchool(schoolId)){
+        if (Validator.isUserBelongToThisSchool(schoolId)){
             return ResponseEntity.ok(lessonService.getLessonById(id));
         } else {
             return ResponseEntity.badRequest().body("User is not authorized to access this resource.");

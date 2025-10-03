@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.regex.Pattern;
 
-@Service
 
 public class Validator {
     private Validator(){}

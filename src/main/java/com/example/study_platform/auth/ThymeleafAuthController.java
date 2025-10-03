@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ThymeleafAuthController {
 
     private final UserService userService;
-    private final Validator validator;
     private final AuthenticationManager authenticationManager;
 
 
@@ -47,10 +46,10 @@ public class ThymeleafAuthController {
     @PostMapping("/register")
     public String register(@ModelAttribute("user") UserCreateRequest request, Model model) {
         try {
-            if (!validator.isEmailValid(request.email())) {
+            if (!Validator.isEmailValid(request.email())) {
                 throw new RuntimeException("Invalid email");
             }
-            if (!validator.isValidPassword(request.password())) {
+            if (!Validator.isValidPassword(request.password())) {
                 throw new RuntimeException("\"Password must contain at least 8 characters, including digits, \" +\n" +
                         "                    \"uppercase and lowercase letters.\"");
             }
@@ -66,7 +65,7 @@ public class ThymeleafAuthController {
     public String login(@ModelAttribute("user") UserLoginRequest request, Model model) {
         try {
 
-            if (!validator.isEmailValid(request.email()) || !validator.isValidPassword(request.password())) {
+            if (!Validator.isEmailValid(request.email()) || !Validator.isValidPassword(request.password())) {
                 model.addAttribute("error", "Invalid username or password");
                 return "login";
             }

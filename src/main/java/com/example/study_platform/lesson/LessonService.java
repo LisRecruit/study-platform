@@ -31,8 +31,6 @@ public class LessonService {
     private final TeacherService teacherService;
     private final GradeService gradeService;
     private final JournalRecordService journalRecordService;
-    private final Validator validator;
-
 
     @Cacheable("lessons")
     public Lesson getLessonById(Long id) {
@@ -52,11 +50,7 @@ public class LessonService {
         if(grade == null) {
             throw new IllegalArgumentException("Grade Not Found");
         }
-        School school = teacher.getSchool();
-        if (school == null) {
-            throw new IllegalArgumentException("School Not Found for Teacher");
-        }
-        SchoolSettings schoolSettings = school.getSchoolSettings();
+        SchoolSettings schoolSettings = teacher.getSchool().getSchoolSettings();
 
         Lesson lesson = Lesson.builder()
                 .lessonDate(request.date())
@@ -76,6 +70,7 @@ public class LessonService {
 
         List<JournalRecord> journalRecords = grade.getStudents().stream()
                 .map(student -> JournalRecord.builder()
+                        .date(savedLesson.getLessonDate())
                         .lesson(savedLesson)
                         .student(student)
                         .grade(grade)
@@ -95,7 +90,7 @@ public class LessonService {
     @Transactional
     public ResponseEntity<?> editLesson (EditLessonRequest request) {
 
-        if (validator.isDatePast(request.date())){
+        if (Validator.isDatePast(request.date())){
             return ResponseEntity.badRequest().body("You can't edit lesson in the past");
         }
         Optional<Lesson> lesson = lessonRepository.findById(request.lessonId());

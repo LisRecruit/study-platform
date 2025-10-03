@@ -3,8 +3,7 @@ package com.example.study_platform.lesson.dto;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public record CreateLessonRequest(Long subjectId,
-                                  Long teacherId,
+public record CreateLessonRequest(Long teacherId,
                                   LocalDate date,
                                   LocalTime lessonStartTime,
                                   String lessonTopic,

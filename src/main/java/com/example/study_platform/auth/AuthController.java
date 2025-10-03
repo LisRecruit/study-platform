@@ -32,10 +32,9 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final UserDetailsService userDetailsService;
     private final JwtUtil jwtUtil;
-    private final RoleService roleService;
     private final TeacherService teacherService;
     private final StudentService studentService;
-    private final Validator validator;
+
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login (@RequestBody UserLoginRequest request){
@@ -62,10 +61,10 @@ public class AuthController {
     @PostMapping ("/reistration")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<RegistrationResponse> registration (@RequestBody UserCreateRequest request){
-        if (!validator.isEmailValid(request.email())) {
+        if (!Validator.isEmailValid(request.email())) {
             throw new RuntimeException("Invalid email");
         }
-        if (!validator.isValidPassword(request.password())) {
+        if (!Validator.isValidPassword(request.password())) {
             throw new RuntimeException("\"Password must contain at least 8 characters, including digits, \" +\n" +
                     "                    \"uppercase and lowercase letters.\"");
         }
@@ -76,6 +75,7 @@ public class AuthController {
         switch (createdUser.getRole().getName()) {
             case "ROLE_TEACHER" -> teacherService.saveTeacher(request.username());
             case "ROLE_STUDENT" -> studentService.saveStudent(request.username());
+            default -> throw new IllegalStateException("Unexpected value: " + createdUser.getRole().getName());
         }
         RegistrationResponse response = new RegistrationResponse("User registered successfully");
         return ResponseEntity.ok(response);

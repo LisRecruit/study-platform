@@ -5,10 +5,10 @@ import com.example.study_platform.grade.GradeService;
 import com.example.study_platform.journal.dto.request.EvaluateStudentRequest;
 import com.example.study_platform.journal.dto.request.JournalRecordRequest;
 import com.example.study_platform.journal.dto.response.JournalRecordResponse;
+import com.example.study_platform.journal.filter.JournalFilter;
 import com.example.study_platform.lesson.Lesson;
 import com.example.study_platform.lesson.LessonService;
 import com.example.study_platform.school.School;
-import com.example.study_platform.school.SchoolRepository;
 import com.example.study_platform.school.SchoolService;
 import com.example.study_platform.schoolSubject.SchoolSubject;
 import com.example.study_platform.schoolSubject.SchoolSubjectService;
@@ -57,23 +57,13 @@ public class JournalRecordService {
         return journalRecordMapper.toResponse(savedRecord);
     }
     @Transactional
-    public List<JournalRecord> saveAllJournalRecords(List<JournalRecord> journalRecords) {
-        return journalRecordRepository.saveAll(journalRecords);
+    public void saveAllJournalRecords(List<JournalRecord> journalRecords) {
+        journalRecordRepository.saveAll(journalRecords);
     }
 
     @Transactional
-    public List<JournalRecordResponse> getJournalRecords(Object filter) {
-        List<JournalRecord> records;
-
-        if (filter instanceof Grade grade) {
-            records = journalRecordRepository.findAll(JournalRecordSpecification.hasGrade(grade));
-        } else if (filter instanceof Lesson lesson) {
-            records = journalRecordRepository.findAll(JournalRecordSpecification.hasLesson(lesson));
-        } else if (filter instanceof Student student) {
-            records = journalRecordRepository.findAll(JournalRecordSpecification.hasStudent(student));
-        } else {
-            throw new IllegalArgumentException("Unsupported filter type");
-        }
+    public List<JournalRecordResponse> getJournalRecords(JournalFilter filter) {
+        List<JournalRecord> records = journalRecordRepository.findAll(filter.toSpecification());
 
         return records.stream()
                 .map(journalRecordMapper::toResponse)
@@ -83,11 +73,11 @@ public class JournalRecordService {
 
     @Transactional
     public JournalRecordResponse evaluateStudent (EvaluateStudentRequest request) {
-        Optional<JournalRecord> record = journalRecordRepository.findById(request.journalId());
-        if (record.isEmpty()) {
+        Optional<JournalRecord> oldRecord = journalRecordRepository.findById(request.journalId());
+        if (oldRecord.isEmpty()) {
             throw new IllegalArgumentException("Journal Record Not Found");
         }
-        JournalRecord journalRecord = record.get();
+        JournalRecord journalRecord = oldRecord.get();
         journalRecord.setMark(request.mark());
         return journalRecordMapper.toResponse(journalRecordRepository.save(journalRecord));
     }

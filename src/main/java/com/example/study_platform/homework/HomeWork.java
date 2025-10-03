@@ -3,6 +3,7 @@ package com.example.study_platform.homework;
 import com.example.study_platform.grade.Grade;
 import com.example.study_platform.journal.JournalRecord;
 import com.example.study_platform.student.Student;
+import com.example.study_platform.teacher.Teacher;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,8 +29,12 @@ public class HomeWork {
     @JoinColumn(name = "student_id")
     private Student student;
     private String task;
-    private String studentTask;
+    private String studentsResult;
     @OneToOne(mappedBy = "home_work", cascade = CascadeType.ALL, orphanRemoval = true)
     private JournalRecord journalRecord;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "teacher_id")
+    private Teacher teacher;
+
 
 }

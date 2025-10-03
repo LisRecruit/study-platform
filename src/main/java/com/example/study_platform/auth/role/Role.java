@@ -21,7 +21,8 @@ public class Role {
     @SequenceGenerator(name = "role_seq", sequenceName = "seq_roles_id", allocationSize = 1)
 
     private Long id;
+    @Column(nullable = false)
     private String name;
-    @OneToOne(mappedBy = "role", orphanRemoval = true)
-    private User user;
+    @OneToMany(mappedBy = "role", orphanRemoval = true)
+    private List<User> users = new ArrayList<>();
 }
