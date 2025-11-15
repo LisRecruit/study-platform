@@ -40,7 +40,7 @@ public class LessonController {
 
     @DeleteMapping("/{id}")
     @RolesAllowed("ROLE_TEACHER")
-    public ResponseEntity<?> deletLesson (@PathVariable Long id){
+    public ResponseEntity<?> deleteLesson (@PathVariable Long id){
         try {
             return lessonService.deleteLessonById(id);
         } catch (Exception e) {

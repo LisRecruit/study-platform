@@ -1,7 +1,9 @@
 package com.example.study_platform.auth.user;
 
+import com.example.study_platform.auth.registration_code.RegistrationCode;
 import com.example.study_platform.auth.role.Role;
 import com.example.study_platform.auth.role.RoleRepository;
+import com.example.study_platform.auth.role.RoleService;
 import com.example.study_platform.auth.user.dto.request.UserCreateRequest;
 import com.example.study_platform.auth.user.dto.response.UserResponse;
 import jakarta.persistence.EntityNotFoundException;
@@ -20,18 +22,19 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
-    private final RoleRepository roleRepository;
+    private final RoleService roleService;
     @Transactional
-    public User createUser (UserCreateRequest request) {
+    public User createUser (UserCreateRequest request, RegistrationCode registrationCode) {
         if (userRepository.existsByEmail(request.email())){
             throw new RuntimeException("Username already exists");
         }
-        Role role = roleRepository.findById(request.roleId())
-                .orElseThrow(() -> new EntityNotFoundException("Role not found"));
         User user = User.builder()
                 .username(request.username())
                 .password(passwordEncoder.encode(request.password()))
-                .role(role)
+                .role(registrationCode.getRole())
+                .firstName(registrationCode.getFirstName())
+                .lastName(registrationCode.getLastName())
+                .middleName(registrationCode.getMiddleName())
                 .build();
         return userRepository.save(user);
     }

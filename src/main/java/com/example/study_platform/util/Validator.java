@@ -1,11 +1,8 @@
 package com.example.study_platform.util;
 
 import com.example.study_platform.auth.user.CustomUserDetails;
-import com.example.study_platform.school.School;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.regex.Pattern;

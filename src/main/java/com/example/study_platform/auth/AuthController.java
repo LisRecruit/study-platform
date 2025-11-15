@@ -1,5 +1,9 @@
 package com.example.study_platform.auth;
 
+import com.example.study_platform.auth.registration_code.RegistrationCode;
+import com.example.study_platform.auth.registration_code.RegistrationCodeMapper;
+import com.example.study_platform.auth.registration_code.RegistrationCodeService;
+import com.example.study_platform.auth.registration_code.dto.CodeRequest;
 import com.example.study_platform.auth.user.UserMapper;
 import com.example.study_platform.auth.user.dto.request.UserCreateRequest;
 import com.example.study_platform.auth.user.dto.response.RegistrationResponse;
@@ -34,6 +38,8 @@ public class AuthController {
     private final JwtUtil jwtUtil;
     private final TeacherService teacherService;
     private final StudentService studentService;
+    private final RegistrationCodeService registrationCodeService;
+    private final RegistrationCodeMapper registrationCodeMapper;
 
 
     @PostMapping("/login")
@@ -68,7 +74,10 @@ public class AuthController {
             throw new RuntimeException("\"Password must contain at least 8 characters, including digits, \" +\n" +
                     "                    \"uppercase and lowercase letters.\"");
         }
-        User createdUser = userService.createUser(request);
+        RegistrationCode registrationCode =  registrationCodeMapper
+                .responseToEntity(registrationCodeService.getByCode(new CodeRequest(request.code())));
+        User createdUser = userService.createUser(request, registrationCode);
+        registrationCodeService.delete(registrationCode.getId());
         if (createdUser == null) {
             throw new RuntimeException("User already exists");
         }
